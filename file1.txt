@@ -4,3 +4,6 @@ commit1 - more blah
 
 commit2 - further blah
 commit2 - further blahs
+
+dev_branch_commit1
+dev_branch_commit1
