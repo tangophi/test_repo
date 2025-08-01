@@ -1,0 +1,27 @@
+From 4e7b7d115ae02d14d018c6b917dc0cbef26f2de6 Mon Sep 17 00:00:00 2001
+From: gopinath Marappan <gopinath_m@hotmail.com>
+Date: Fri, 1 Aug 2025 18:41:36 +0530
+Subject: [PATCH] dev branch 2 commit 1
+
+---
+ file1.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/file1.txt b/file1.txt
+index 706a3ea..c850173 100644
+--- a/file1.txt
++++ b/file1.txt
+@@ -6,4 +6,8 @@ commit2 - further blah
+ commit2 - further blahs
+ 
+ dev_branch_commit1
+-dev_branch_commit1
+\ No newline at end of file
++dev_branch_commit1
++
++dev_branch_2_commit1
++dev_branch_2_commit1
++
+-- 
+2.50.1
+
