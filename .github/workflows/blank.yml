@@ -1,0 +1,42 @@
+name: Generate Patch on PR Merge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  create-patch:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important to fetch full history for diffs
+
+      - name: Get PR metadata
+        id: pr
+        run: |
+          echo "PR_NUM=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+          echo "PR_BASE=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+          echo "PR_HEAD=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+
+      - name: Set Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate patch file
+        run: |
+          mkdir -p patches
+          git format-patch ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.merge_commit_sha }} -o patches
+          mv patches/*.patch patches/pr-${{ env.PR_NUM }}.patch
+
+      - name: Commit patch file
+        run: |
+          git checkout ${{ env.PR_BASE }}
+          git pull
+          git add patches/pr-${{ env.PR_NUM }}.patch
+          git commit -m "Add patch for PR #${{ env.PR_NUM }}"
+          git push
